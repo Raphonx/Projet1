@@ -1,6 +1,5 @@
 <?php
-    include '_doctype.php';
-    include '_navbar.php';
+    include '_header.php';
 $arrayPlanets = [
     'mars' => ["mars.php", "./images/planetes/mars/mars.jpg", "Visiter Mars", "3M€/pers *"],
     'coruscant' => ['coruscant.php','./images/planetes/coruscant/Coruscant.jpg','Visiter Coruscant','20M€/pers *'],
@@ -54,6 +53,5 @@ $arrayPlanets = [
 
     <?php
     include '_footer.php';
-    include '_modal.php';
     ?>
 

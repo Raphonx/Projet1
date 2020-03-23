@@ -18,3 +18,7 @@
       <link rel="icon" href="favicon.ico">
       <title>Partez dans les étoiles - Voyager</title>
   </head>
+
+<?php
+include '_navbar.php';
+

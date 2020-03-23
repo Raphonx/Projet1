@@ -1,6 +1,5 @@
 <?php
-    include '_doctype.php';
-    include '_navbar.php';
+    include '_header.php';
     $Team = [
         'Amina' => ["./images/photo-equip/Amina.jpg", 'Amina','Some quick example text to build on the card title and make up the bulk of the
                         card\'s content.'],
@@ -56,6 +55,5 @@
 
 
 <?php
-include '_modal.php';
 include '_footer.php';
 ?>

@@ -1,7 +1,6 @@
 <?php
 
-    include '_doctype.php';
-    include '_navbar.php';
+    include '_header.php';
 ?>
 
     <!--                          Banner                           -->
@@ -117,6 +116,5 @@
 
 
 <?php
-include '_modal.php';
 include '_footer.php';
 ?>

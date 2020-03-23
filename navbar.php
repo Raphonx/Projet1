@@ -1,5 +1,5 @@
 <?php
-include '_doctype.php';
+include '_header.php';
 ?>
 
   <body>
