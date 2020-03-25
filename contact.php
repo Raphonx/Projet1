@@ -1,5 +1,22 @@
 <?php
 include '_header.php';
+$nameErr = $messageErr = "";
+$name = $message = "";
+$condition = 0;
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    if (empty($_POST['user_name'])) {
+        $nameErr = "Name is required";
+    } else {
+       $name = $_POST['user_name'] ;
+        $condition++;
+    }
+    if ($condition === 1){
+        header("Location: success.php?user_names=$_POST[user_name]");
+    }
+}
 ?>
 
 
@@ -18,10 +35,11 @@ include '_header.php';
     <p class="text-home">Conctrétisez vos rêves sur Voyager ! Notre agence vous propose de nombreux séjours sur de nombreuses destinations à travers la galaxie. Rendez-vous dans l'un de nos bureaux de vente, ou contactez-nous dès maintenant via le formulaire ci-dessous.</p>
     <!--      Formulaire de contact -        -->
         <h2 class="title">Nous contacter</h2>
-        <form class="form">
+        <form class="form" action="" method="post">
             <div class="form-row row1">
                 <div class="col">
-                    <input type="text" class="form-control" placeholder="Prénom">
+                    <span class="error"><?php echo $nameErr;?></span>
+                    <input type="text" class="form-control" placeholder="Prénom*" name="user_name">
                 </div>
             </div>
             <div class="form-row row3">
