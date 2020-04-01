@@ -1,21 +1,33 @@
 <?php
 include '_header.php';
-$nameErr = $messageErr = "";
-$name = $message = "";
-$condition = 0;
 
+$errors = [];
+$name = "";
+$message = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if (!empty($_POST)) {
 
-    if (empty($_POST['user_name'])) {
-        $nameErr = "Name is required";
-    } else {
-       $name = $_POST['user_name'] ;
-        $condition++;
+    $name = trim($_POST['name']);
+    $message = trim($_POST['message']);
+
+    if (empty($name)) {
+        $errors['name'] = "Ce champ est obligatoire";
     }
-    if ($condition === 1){
-        header("Location: success.php?user_names=$_POST[user_name]");
+    if (empty($message)) {
+        $errors['message'] = "Ce champ est obligatoire";
     }
+
+    $queryString = "";
+    foreach ($_POST as $key => $value) {
+        $queryString .= empty($queryString) ? "?" : "&";
+        $queryString .= urlencode($key) . "=" . urlencode($value);
+    }
+
+    if (empty($errors)) {
+        // Enregistrement de l utilisateur en BDD
+        header("Location: /success.php$queryString");
+    }
+
 }
 ?>
 
@@ -38,14 +50,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form class="form" action="" method="post">
             <div class="form-row row1">
                 <div class="col">
-                    <span class="error"><?php echo $nameErr;?></span>
-                    <input type="text" class="form-control" placeholder="Prénom*" name="user_name">
+                    <input type="text" class="form-control" placeholder="Prénom*" name="name">
+                    <?php if (isset($errors['name'])) { ?>
+                        <small class="form-text text-error">
+                            <?php echo $errors['name'] ?>
+                        </small>
+                    <?php } ?>
                 </div>
             </div>
             <div class="form-row row3">
                 <label for="exampleFormControlTextarea1"></label>
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
-                    placeholder="Entrez votre message"></textarea>
+                    placeholder="Entrez votre message" name="message"></textarea>
+                <?php if (isset($errors['message'])) : ?>
+                    <small class="form-text text-error">
+                        <?= $errors['message'] ?>
+                    </small>
+                <?php endif; ?>
             </div>
             <button class="btn" type="submit">Envoyer</button>
         </form>
