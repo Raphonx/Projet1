@@ -1,18 +1,39 @@
 <?php
 include '_header.php';
+require_once "connect.php";
+
 
 $errors = [];
 $name = "";
+$email = "";
 $message = "";
+
+
 
 if (!empty($_POST)) {
 
-    $name = trim($_POST['name']);
-    $message = trim($_POST['message']);
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $message = $_POST['message'];
+    $pdo = new PDO(DSN, USER, PASS);
+
+    $query = "INSERT INTO user (`name`, `email`) VALUES (:name, :email )";
+    $statement =  $pdo->prepare($query);
+
+    $statement->bindValue(':name', $name);
+    $statement->bindValue(':email', $email);
+
+    $statement->execute();
+
+
 
     if (empty($name)) {
         $errors['name'] = "Ce champ est obligatoire";
     }
+    if (empty($email)) {
+        $errors['email'] = 'Ce champ est obligatoire';
+    }
+
     if (empty($message)) {
         $errors['message'] = "Ce champ est obligatoire";
     }
@@ -58,10 +79,20 @@ if (!empty($_POST)) {
                     <?php } ?>
                 </div>
             </div>
+            <div class="form-row row1">
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Email*" name="email">
+                    <?php if (isset($errors['email'])) { ?>
+                        <small class="form-text text-error">
+                            <?php echo $errors['email'] ?>
+                        </small>
+                    <?php } ?>
+                </div>
+            </div>
             <div class="form-row row3">
                 <label for="exampleFormControlTextarea1"></label>
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
-                    placeholder="Entrez votre message" name="message"></textarea>
+                    placeholder="Entrez votre message*" name="message"></textarea>
                 <?php if (isset($errors['message'])) : ?>
                     <small class="form-text text-error">
                         <?= $errors['message'] ?>
